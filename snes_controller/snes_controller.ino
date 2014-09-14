@@ -193,7 +193,7 @@ void loop() {
     joySt.buttons = joySt.buttons | 8;
   }
   if (btn_x && bitRead(controller_data, 6) == 1) {
-    btn_x = true;
+    btn_x = false;
     joySt.buttons = joySt.buttons & 247;
   }
 
