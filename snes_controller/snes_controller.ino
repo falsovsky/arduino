@@ -47,7 +47,7 @@ word controllerRead() {
     digitalWrite(clock,HIGH);
     delayMicroseconds(2);
     data = data << 1;
-    data = data + digitalRead(datin) ;
+    data = data | digitalRead(datin) ;
     delayMicroseconds(2);
     digitalWrite(clock,LOW);
   }
