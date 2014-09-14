@@ -10,13 +10,12 @@ Orange (Latch)  - Pin 12
 Red    (Data)   - Pin 11
 */
 
-static int clock   = 13; // set the clock pin
-static int latch   = 12; // set the latch pin
-static int datin   = 11; // set the data in pin
+static int clock = 13; // set the clock pin
+static int latch = 12; // set the latch pin
+static int datin = 11; // set the data in pin
 
 JoyState_t joySt;
 
-/* SETUP */
 void setup() {
   //Serial.begin(9600);
   
@@ -30,7 +29,6 @@ void setup() {
   joySt.zAxis = 127;
 }
 
-/* THIS READS DATA FROM THE CONTROLLER */
 word controllerRead() {
   word data = 0;
 
@@ -77,38 +75,34 @@ void loop() {
   16              none (always high)
   */
 
-  word controller_data = controllerRead();
+  word controller_data = controllerRead(); // Read 16 bit of data
 
-  joySt.buttons = 0;
+  joySt.buttons = 0; // Reset buttons
 
-  joySt.buttons |= (!bitRead(controller_data, 15) << 0); // B - bit 16
-  joySt.buttons |= (!bitRead(controller_data, 14) << 1); // Y - bit 15
-  joySt.buttons |= (!bitRead(controller_data, 13) << 6); // Select - bit 14
-  joySt.buttons |= (!bitRead(controller_data, 12) << 7); // Start - bit 13
-  joySt.buttons |= (!bitRead(controller_data, 7) << 2);  // A - bit 8
-  joySt.buttons |= (!bitRead(controller_data, 6) << 3);  // X - bit 7
-  joySt.buttons |= (!bitRead(controller_data, 5) << 4);  // L - bit 6
-  joySt.buttons |= (!bitRead(controller_data, 4) << 5);  // R - bit 5
+  joySt.buttons |= (!bitRead(controller_data, 15) << 0); // B - bit 16 - bit 1 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 14) << 1); // Y - bit 15 - bit 2 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 13) << 6); // Select - bit 14 - bit 7 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 12) << 7); // Start - bit 13 - bit 8 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 7) << 2);  // A - bit 8 - bit 6 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 6) << 3);  // X - bit 7 - bit 5 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 5) << 4);  // L - bit 6 - bit 4 on the Joystick
+  joySt.buttons |= (!bitRead(controller_data, 4) << 5);  // R - bit 5 - bit 3 on the Joystick
 
   
-  joySt.xAxis = 127;
-  joySt.yAxis = 127;
+  joySt.xAxis = 127; // Reset x axis
+  joySt.yAxis = 127; // Rest y axis
   
-  // Up - bit 12
-  if (!bitRead(controller_data, 11))
+  if (!bitRead(controller_data, 11)) // Up - bit 12
     joySt.yAxis = 0;
 
-  // Down - bit 11
-  if (!bitRead(controller_data, 10))
+  if (!bitRead(controller_data, 10)) // Down - bit 11
     joySt.yAxis = 255;
 
-  // Left - bit 10
-  if (!bitRead(controller_data, 9))
+  if (!bitRead(controller_data, 9))  // Left - bit 10
     joySt.xAxis = 0;
 
-  // Right - bit 9
-  if (!bitRead(controller_data, 8))
+  if (!bitRead(controller_data, 8))  // Right - bit 9
     joySt.xAxis = 255;
 
-  Joystick.setState(&joySt);
+  Joystick.setState(&joySt); // Update joystick state
 }
