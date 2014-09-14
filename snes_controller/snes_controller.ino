@@ -1,6 +1,6 @@
 /*
 Based on https://github.com/njguibert/NesJoystickArduino/
-Adapted for SNES
+Adapted for SNES with info from http://www.gamefaqs.com/snes/916396-super-nintendo/faqs/5395
 
 Snes Controller - Arduino
 White 5V        - 5V
@@ -10,9 +10,9 @@ Orange (Latch)  - Pin 12
 Red    (Data)   - Pin 11
 */
 
-static int clock = 13; // set the clock pin
-static int latch = 12; // set the latch pin
-static int datin = 11; // set the data in pin
+static int clock   = 13; // set the clock pin
+static int latch   = 12; // set the latch pin
+static int datin   = 11; // set the data in pin
 
 boolean btn_up     = false;
 boolean btn_down   = false;
@@ -73,6 +73,28 @@ word controllerRead() {
 }
 
 void loop() {
+  
+  /*
+  Clock Cycle     Button Reported
+  ===========     ===============
+  1               B
+  2               Y
+  3               Select
+  4               Start
+  5               Up on joypad
+  6               Down on joypad
+  7               Left on joypad
+  8               Right on joypad
+  9               A
+  10              X
+  11              L
+  12              R
+  13              none (always high)
+  14              none (always high)
+  15              none (always high)
+  16              none (always high)
+  */
+
   word controller_data = controllerRead();
 
   // B - BIT 16
