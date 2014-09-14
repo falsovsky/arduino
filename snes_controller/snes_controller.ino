@@ -14,19 +14,6 @@ static int clock   = 13; // set the clock pin
 static int latch   = 12; // set the latch pin
 static int datin   = 11; // set the data in pin
 
-boolean btn_up     = false;
-boolean btn_down   = false;
-boolean btn_left   = false;
-boolean btn_right  = false;
-boolean btn_a      = false;
-boolean btn_b      = false;
-boolean btn_x      = false;
-boolean btn_y      = false;
-boolean btn_l      = false;
-boolean btn_r      = false;
-boolean btn_select = false;
-boolean btn_start  = false;
-
 JoyState_t joySt;
 
 /* SETUP */
@@ -94,32 +81,32 @@ void loop() {
 
   joySt.buttons = 0;
 
-  joySt.buttons |= (!bitRead(controller_data, 15) << 0);
-  joySt.buttons |= (!bitRead(controller_data, 14) << 1);
-  joySt.buttons |= (!bitRead(controller_data, 7) << 2);
-  joySt.buttons |= (!bitRead(controller_data, 6) << 3);
-  joySt.buttons |= (!bitRead(controller_data, 5) << 4);
-  joySt.buttons |= (!bitRead(controller_data, 4) << 5);
-  joySt.buttons |= (!bitRead(controller_data, 13) << 6);
-  joySt.buttons |= (!bitRead(controller_data, 12) << 7);
+  joySt.buttons |= (!bitRead(controller_data, 15) << 0); // B - bit 16
+  joySt.buttons |= (!bitRead(controller_data, 14) << 1); // Y - bit 15
+  joySt.buttons |= (!bitRead(controller_data, 13) << 6); // Select - bit 14
+  joySt.buttons |= (!bitRead(controller_data, 12) << 7); // Start - bit 13
+  joySt.buttons |= (!bitRead(controller_data, 7) << 2);  // A - bit 8
+  joySt.buttons |= (!bitRead(controller_data, 6) << 3);  // X - bit 7
+  joySt.buttons |= (!bitRead(controller_data, 5) << 4);  // L - bit 6
+  joySt.buttons |= (!bitRead(controller_data, 4) << 5);  // R - bit 5
 
   
   joySt.xAxis = 127;
   joySt.yAxis = 127;
   
-  // UP - BIT 12
+  // Up - bit 12
   if (!bitRead(controller_data, 11))
     joySt.yAxis = 0;
 
-  // DOWN - BIT 11
+  // Down - bit 11
   if (!bitRead(controller_data, 10))
     joySt.yAxis = 255;
 
-  // LEFT - BIT 10
+  // Left - bit 10
   if (!bitRead(controller_data, 9))
     joySt.xAxis = 0;
 
-  // RIGHT - BIT 9
+  // Right - bit 9
   if (!bitRead(controller_data, 8))
     joySt.xAxis = 255;
 
