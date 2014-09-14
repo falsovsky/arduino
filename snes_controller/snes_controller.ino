@@ -17,16 +17,15 @@ static int datin = 11; // set the data in pin
 JoyState_t joySt;
 
 void setup() {
-  Serial.begin(9600);
-  // while the serial stream is not open, do nothing:
-  while (!Serial) ;
+  //Serial.begin(9600);
+  //while (!Serial) ;
 
-  pinMode(latch,OUTPUT);
-  pinMode(clock,OUTPUT);
-  pinMode(datin,INPUT);
+  pinMode(latch, OUTPUT);
+  pinMode(clock, OUTPUT);
+  pinMode(datin, INPUT);
 
-  digitalWrite(latch,HIGH);
-  digitalWrite(clock,HIGH);
+  digitalWrite(latch, LOW);
+  digitalWrite(clock, HIGH);
 
   joySt.zAxis = 127;
 }
@@ -35,19 +34,24 @@ word controllerRead()
 {
   word data = 0;
  
-  digitalWrite(latch,HIGH);
+  digitalWrite(latch, HIGH);
   delayMicroseconds(2);
-  digitalWrite(latch,LOW);
+  digitalWrite(latch, LOW);
+  delayMicroseconds(1);
+ 
+  digitalWrite(clock, LOW);
   delayMicroseconds(1);
  
   for (int i = 0; i < 16; i++)
   {
     data >>= 1;
     data |= (digitalRead(datin) ? 0x8000 : 0);
-    digitalWrite(clock,HIGH);
-    //delayMicroseconds(1);
-    digitalWrite(clock,LOW);
+    digitalWrite(clock, HIGH);
+    delayMicroseconds(2);
+    digitalWrite(clock, LOW);
+    delayMicroseconds(1);
   }
+  digitalWrite(clock, HIGH);
   return data;
 }
 
@@ -74,7 +78,7 @@ void loop() {
    */
 
   word controller_data = controllerRead(); // Read 16 bit of data
-  Serial.println(controller_data, BIN);
+  //Serial.println(controller_data, BIN);
 
   joySt.buttons = 0; // Reset buttons
 
