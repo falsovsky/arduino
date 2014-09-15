@@ -56,6 +56,7 @@ word controllerRead()
 }
 
 void loop() {
+  
   /*
    Clock Cycle     Button Reported
    ===========     ===============
@@ -75,7 +76,7 @@ void loop() {
    14              none (always high)
    15              none (always high)
    16              none (always high)
-   */
+  */
 
   word controller_data = controllerRead(); // Read 16 bit of data
   //Serial.println(controller_data, BIN);
@@ -90,7 +91,6 @@ void loop() {
   joySt.buttons |= (!bitRead(controller_data, 9) << 3);  // X - bit 10     - bit 5 on the Joystick
   joySt.buttons |= (!bitRead(controller_data, 10) << 4); // L - bit 11     - bit 4 on the Joystick
   joySt.buttons |= (!bitRead(controller_data, 11) << 5); // R - bit 12     - bit 3 on the Joystick
-
 
   joySt.xAxis = 127; // Reset x axis
   joySt.yAxis = 127; // Rest y axis
